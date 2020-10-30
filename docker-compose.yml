@@ -2,37 +2,99 @@ version: '3'
 
 services:
 
-  ap-adminservice:
+  ap-adminservice-dev:
     build: adminservice
-    image: sockyjam/apollo.adminservice:v01
-    container_name: apollo.adminservice 
+    image: sockyjam/apollo.adminservice.dev:v01
+    container_name: apollo.adminservice.dev
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDB?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBDev?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
     volumes:
             - ./admin_logs:/opt/logs
     ports:
-      - "8090:8090"
+      - "8091:8090"
     depends_on:
       - ap-mysql
 
 
-  ap-configservice:
-    build: configservice
-    image: sockyjam/apollo.configservice:v01
-    container_name: apollo.configservice
+  ap-adminservice-test:
+    build: adminservice
+    image: sockyjam/apollo.adminservice.test:v01
+    container_name: apollo.adminservice.test 
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDB?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBTest?characterEncoding=utf8
+            SPRING_DATASOURCE_USERNAME: root
+            SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
+    volumes:
+            - ./admin_logs:/opt/logs
+    ports:
+      - "8092:8090"
+    depends_on:
+      - ap-mysql
+
+
+  ap-adminservice-pro:
+    build: adminservice
+    image: sockyjam/apollo.adminservice.pro:v01
+    container_name: apollo.adminservice.pro 
+    environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBPro?characterEncoding=utf8
+            SPRING_DATASOURCE_USERNAME: root
+            SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
+    volumes:
+            - ./admin_logs:/opt/logs
+    ports:
+            - "8093:8090"
+    depends_on:
+      - ap-mysql
+
+
+  ap-configservice-dev:
+    build: configservice
+    image: sockyjam/apollo.configservice.dev:v01
+    container_name: apollo.configservice.dev
+    environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBDev?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
     volumes:
             - ./config_logs:/opt/logs
     ports:
-            - "8080:8080"
+            - "8081:8080"
     depends_on:
       - ap-mysql
 
+  ap-configservice-test:
+    build: configservice
+    image: sockyjam/apollo.configservice.test:v01
+    container_name: apollo.configservice.test
+    environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBTest?characterEncoding=utf8
+            SPRING_DATASOURCE_USERNAME: root
+            SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
+    volumes:
+            - ./config_logs:/opt/logs
+    ports:
+            - "8082:8080"
+    depends_on:
+      - ap-mysql
+
+
+  ap-configservice-pro:
+    build: configservice
+    image: sockyjam/apollo.configservice.pro:v01
+    container_name: apollo.configservice.pro
+    environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBPro?characterEncoding=utf8
+            SPRING_DATASOURCE_USERNAME: root
+            SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
+    volumes:
+            - ./config_logs:/opt/logs
+    ports:
+            - "8083:8080"
+    depends_on:
+      - ap-mysql
 
 
   ap-portal:
@@ -43,9 +105,10 @@ services:
             SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloPortalDB?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
-            APOLLO_PORTAL_ENVS: dev,pro
-              #- DEV_META=http://fill-in-dev-meta-server:8080
-              #- PRO_META=http://fill-in-pro-meta-server:8080
+            APOLLO_PORTAL_ENVS: dev, test, pro
+            DEV_META: http://ap-configservice-dev:8080
+            TEST_META: http://ap-configservice-test:8080
+            PRO_META: http://ap-configservice-pro:8080
     volumes:
             - ./portal_logs:/opt/logs
     ports:
@@ -64,10 +127,10 @@ services:
     volumes:
         - ./dbdata:/var/lib/mysql
     ports:
-        - "3308:3306"
+        - "3307:3306"
     expose:
         - "3306"
-        - "3308"
+        - "3307"
     command:
         --character-set-server=utf8
         --collation-server=utf8_general_ci
