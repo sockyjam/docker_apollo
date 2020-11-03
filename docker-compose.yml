@@ -58,6 +58,10 @@ services:
             SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBDev?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
+            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://192.168.11.61:8081 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
+            #JAVA_OPTS: "-Deureka.instance.ip-address=192.168.11.61 -Deureka.instance.hostname=192.168.11.61  -Deureka.instance.preferIpAddress=true"
+            #JAVA_OPTS: "-Deureka.instance.ip-address=192.168.11.61 -Deureka.instance.preferIpAddress=true"
+            #SERVER_PORT: 8081
     volumes:
             - ./configdev_logs:/opt/logs
     ports:
