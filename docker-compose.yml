@@ -7,13 +7,13 @@ services:
     image: sockyjam/apollo.adminservice.dev:v01
     container_name: apollo.adminservice.dev
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBDev?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloConfigDBDev?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
     volumes:
             - ./admindev_logs:/opt/logs
     ports:
-      - "8091:8090"
+      - "8071:8090"
     depends_on:
       - ap-mysql
 
@@ -23,13 +23,13 @@ services:
     image: sockyjam/apollo.adminservice.test:v01
     container_name: apollo.adminservice.test 
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBTest?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloConfigDBTest?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
     volumes:
             - ./admintest_logs:/opt/logs
     ports:
-      - "8092:8090"
+      - "8072:8090"
     depends_on:
       - ap-mysql
 
@@ -39,13 +39,13 @@ services:
     image: sockyjam/apollo.adminservice.pro:v01
     container_name: apollo.adminservice.pro 
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBPro?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloConfigDBPro?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
     volumes:
             - ./adminpro_logs:/opt/logs
     ports:
-            - "8093:8090"
+            - "8073:8090"
     depends_on:
       - ap-mysql
 
@@ -55,16 +55,16 @@ services:
     image: sockyjam/apollo.configservice.dev:v01
     container_name: apollo.configservice.dev
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBDev?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloConfigDBDev?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
-            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://${HOST_IP}:8081 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
+            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://${HOST_IP}:8074 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
     volumes:
             - ./configdev_logs:/opt/logs
     ports:
-            - "8081:8080"
+            - "8074:8080"
     expose:
-            - "8081"
+            - "8074"
     depends_on:
       - ap-mysql
 
@@ -73,16 +73,16 @@ services:
     image: sockyjam/apollo.configservice.test:v01
     container_name: apollo.configservice.test
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBTest?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloConfigDBTest?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
-            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://${HOST_IP}:8082 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
+            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://${HOST_IP}:8075 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
     volumes:
             - ./configtest_logs:/opt/logs
     ports:
-            - "8082:8080"
+            - "8075:8080"
     expose:
-            - "8082"
+            - "8075"
     depends_on:
       - ap-mysql
 
@@ -92,16 +92,16 @@ services:
     image: sockyjam/apollo.configservice.pro:v01
     container_name: apollo.configservice.pro
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloConfigDBPro?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloConfigDBPro?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
-            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://${HOST_IP}:8083 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
+            JAVA_OPTS: "-Deureka.instance.homePageUrl=http://${HOST_IP}:8076 -Deureka.instance.prefer-ip-address=false -Deureka.instance.preferIpAddress=false"
     volumes:
             - ./configpro_logs:/opt/logs
     ports:
-            - "8083:8080"
+            - "8076:8080"
     expose:
-            - "8083"
+            - "8076"
     depends_on:
       - ap-mysql
 
@@ -111,7 +111,7 @@ services:
     image: sockyjam/apollo.portal
     container_name: apollo.portal
     environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3306/ApolloPortalDB?characterEncoding=utf8
+            SPRING_DATASOURCE_URL: jdbc:mysql://ap-mysql:3308/ApolloPortalDB?characterEncoding=utf8
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: jfdaslghlklsfak78421k
             APOLLO_PORTAL_ENVS: dev, test, pro
@@ -136,10 +136,9 @@ services:
     volumes:
         - ./dbdata:/var/lib/mysql
     ports:
-        - "3307:3306"
+        - "3308:3306"
     expose:
-        - "3306"
-        - "3307"
+        - "3308"
     command:
         --character-set-server=utf8
         --collation-server=utf8_general_ci

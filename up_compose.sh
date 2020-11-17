@@ -1,3 +1,3 @@
-export HOST_IP=119.23.182.3
+export HOST_IP=120.79.3.4
 docker-compose up -d
 
